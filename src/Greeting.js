@@ -6,10 +6,13 @@ const Greeting = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/messages');
+        const response = await fetch('http://localhost:3000/api/messages');
         const data = await response.json();
-        console.log('Response from server:', data);
-        setGreeting(data[0].message);
+        
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const randomMessage = data[randomIndex].message;
+
+        setGreeting(randomMessage);
       } catch (error) {
         console.error('Error fetching greeting:', error);
       }
@@ -18,11 +21,8 @@ const Greeting = () => {
     fetchData();
   }, []);
 
-  console.log('Greeting value:', greeting);
-
   return (
     <div>
-      <h2>Greeting Component</h2>
       <p>{greeting}</p>
     </div>
   );
