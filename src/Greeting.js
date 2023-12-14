@@ -8,7 +8,7 @@ const Greeting = () => {
       try {
         const response = await fetch('http://localhost:3000/api/messages');
         const data = await response.json();
-        
+
         const randomIndex = Math.floor(Math.random() * data.length);
         const randomMessage = data[randomIndex].message;
 
