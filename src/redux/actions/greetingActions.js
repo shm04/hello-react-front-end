@@ -1,17 +1,32 @@
-import { setGreeting } from '../reducers/greetingReducer';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-export const fetchRandomGreeting = () => async (dispatch) => {
+export const fetchRandomGreeting = createAsyncThunk('greeting/fetchRandomGreeting', async () => {
   try {
-    const response = await fetch('http://localhost:3000/api/messages');
-    const data = await response.json();
-
-    const randomIndex = Math.floor(Math.random() * data.length);
-    const randomMessage = data[randomIndex].message;
-
-    dispatch(setGreeting(randomMessage));
+    const response = await axios.get('http://localhost:3000/api/messages/random_greeting', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.data;
+    return data;
   } catch (error) {
-    console.error('Error fetching greeting:', error);
+    throw new Error(error);
   }
-};
+});
 
-export default fetchRandomGreeting;
+const greetingSlice = createSlice({
+  name: 'greeting',
+  initialState: {
+    greeting: '',
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchRandomGreeting.fulfilled, (state, action) => {
+      const newState = { ...state, greeting: action.payload };
+      return newState;
+    });
+  },
+});
+
+export default greetingSlice.reducer;
