@@ -1,19 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Greeting from './Greeting';
+import Greeting from './redux/components/Greeting';
 
-const App = () => {
-  return (
-    <Router>
-      <div>
-        <h1>Greeting</h1>
+const App = () => (
+  <Router>
+    <div>
+      <h1>Greeting</h1>
 
-        <Routes>
-          <Route path="/" element={<Greeting />} />
-        </Routes>
-      </div>
-    </Router>
-  );
-};
+      <Routes>
+        <Route path="/" element={<Greeting />} />
+      </Routes>
+    </div>
+  </Router>
+);
 
 export default App;
