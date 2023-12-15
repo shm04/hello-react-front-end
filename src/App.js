@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Greeting from './Greeting';
+import Greeting from './redux/components/Greeting';
 
 const App = () => (
   <Router>
